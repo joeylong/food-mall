@@ -97,7 +97,10 @@ public class UserController {
     public ResponseVo logout(@RequestParam String userId,
                             HttpServletRequest request,
                             HttpServletResponse response) throws Exception {
+        //清除会话cookie
         CookieUtils.deleteCookie(request,response,"user");
+        //TODO 分布式会话中需要清除用户数据
+
         return ResponseUtil.success();
     }
 }
