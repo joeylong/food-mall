@@ -2,6 +2,9 @@ package com.food.mall.pojo;
 
 
 
+import com.food.mall.dto.CategoryODto;
+import org.springframework.beans.BeanUtils;
+
 import javax.persistence.Id;
 
 public class Category {
@@ -260,5 +263,14 @@ public class Category {
      */
     public void setBgColor(String bgColor) {
         this.bgColor = bgColor == null ? null : bgColor.trim();
+    }
+
+    public static CategoryODto category2CategoryODto(Category param){
+        if(param == null){
+            return null;
+        }
+        CategoryODto categoryODto = new CategoryODto();
+        BeanUtils.copyProperties(param,categoryODto);
+        return categoryODto;
     }
 }
