@@ -33,6 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
         //获取二级类别
         List<CategoryODto> twoCategoryODtoList = getSubCatListByFatherId(rootCatId);
         for(CategoryODto twoCategoryODto : twoCategoryODtoList){
+            //获取子类别
             List<CategoryODto> categoryODtoChildList = getChildCategory(twoCategoryODto.getId());
             twoCategoryODto.setSubCatList(categoryODtoChildList);
         }
@@ -59,10 +60,12 @@ public class CategoryServiceImpl implements CategoryService {
         if(fatherId == null){
             return null;
         }
+        //根据父id查询类别
         List<CategoryODto> childCategoryODtoList = getSubCatListByFatherId(fatherId);
         if(CollectionUtils.isEmpty(childCategoryODtoList)){
             return new ArrayList<>();
         }
+        //递归获取类别
         for(CategoryODto childCategoryODto :childCategoryODtoList){
             childCategoryODto.setSubCatList(getChildCategory(childCategoryODto.getId()));
         }
