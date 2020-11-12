@@ -2,6 +2,7 @@ package com.food.mall.service.impl;
 
 import com.food.mall.common.enums.CategoryEnum;
 import com.food.mall.dto.CategoryODto;
+import com.food.mall.dto.NewItemODto;
 import com.food.mall.mapper.CategoryMapper;
 import com.food.mall.pojo.Category;
 import com.food.mall.service.CategoryService;
@@ -47,6 +48,11 @@ public class CategoryServiceImpl implements CategoryService {
             return null;
         }
         return childCategoryList.stream().map(Category::category2CategoryODto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<NewItemODto> getSixNewItemList(Integer rootCatId) {
+        return categoryMapper.getSixNewItemList(rootCatId);
     }
 
     private List<CategoryODto> getChildCategory(Integer fatherId){

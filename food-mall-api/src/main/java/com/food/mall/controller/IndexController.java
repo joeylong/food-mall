@@ -5,6 +5,7 @@ import com.food.mall.common.enums.YesOrNoEnum;
 import com.food.mall.common.utils.ResponseUtil;
 import com.food.mall.common.utils.vo.ResponseVo;
 import com.food.mall.dto.CategoryODto;
+import com.food.mall.dto.NewItemODto;
 import com.food.mall.pojo.Carousel;
 import com.food.mall.pojo.Category;
 import com.food.mall.service.CarouselService;
@@ -45,6 +46,15 @@ public class IndexController {
             return ResponseUtil.error("分类不存在");
         }
         List<CategoryODto>  list = categoryService.getSubCatList(rootCatId);
+        return ResponseUtil.success(list);
+    }
+
+    @GetMapping("/sixNewItems/{rootCatId}")
+    public ResponseVo sixNewItems(@PathVariable Integer rootCatId) {
+        if (rootCatId == null) {
+            return ResponseUtil.error("分类不存在");
+        }
+        List<NewItemODto>  list = categoryService.getSixNewItemList(rootCatId);
         return ResponseUtil.success(list);
     }
 

@@ -2,6 +2,7 @@ package com.food.mall.service;
 
 
 import com.food.mall.dto.CategoryODto;
+import com.food.mall.dto.NewItemODto;
 import com.food.mall.pojo.Category;
 
 import java.util.List;
@@ -24,4 +25,11 @@ public interface CategoryService {
      *
      */
     List<CategoryODto> getSubCatListByFatherId(Integer fatherId);
+
+    /**
+     * 懒加载分类推荐
+     * @param rootCatId
+     * @return
+     */
+    List<NewItemODto> getSixNewItemList(Integer rootCatId);
 }
