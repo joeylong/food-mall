@@ -1,9 +1,12 @@
 package com.food.mall.service;
 
+import com.food.mall.dto.CommentContentIDto;
+import com.food.mall.dto.CommentContentODto;
 import com.food.mall.pojo.Items;
 import com.food.mall.pojo.ItemsImg;
 import com.food.mall.pojo.ItemsParam;
 import com.food.mall.pojo.ItemsSpec;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -39,4 +42,17 @@ public interface ProductService {
      * @return
      */
     ItemsParam queryProductParam(String productId);
+
+    /**
+     * 根据商品id查询评论数
+     *
+     * @param productId
+     * @return
+     */
+    int queryCommentLevel(String productId,Integer levelType);
+
+    /**
+     * 根据商品id查询评论数
+     */
+    PageInfo<CommentContentODto> queryCommentContent(CommentContentIDto contentIDto);
 }

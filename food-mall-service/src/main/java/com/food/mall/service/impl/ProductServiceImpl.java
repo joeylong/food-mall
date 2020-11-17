@@ -1,14 +1,13 @@
 package com.food.mall.service.impl;
 
-import com.food.mall.mapper.ItemsImgMapper;
-import com.food.mall.mapper.ItemsMapper;
-import com.food.mall.mapper.ItemsParamMapper;
-import com.food.mall.mapper.ItemsSpecMapper;
-import com.food.mall.pojo.Items;
-import com.food.mall.pojo.ItemsImg;
-import com.food.mall.pojo.ItemsParam;
-import com.food.mall.pojo.ItemsSpec;
+import com.food.mall.dto.CommentContentIDto;
+import com.food.mall.dto.CommentContentODto;
+import com.food.mall.mapper.*;
+import com.food.mall.pojo.*;
 import com.food.mall.service.ProductService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -29,6 +28,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ItemsParamMapper productParamMapper;
+
+    @Autowired
+    private ItemsCommentsMapper productCommentMapper;
 
     @Override
     public Items queryProductById(String productId) {
@@ -57,5 +59,23 @@ public class ProductServiceImpl implements ProductService {
         Example.Criteria criteria = itemsParamExp.createCriteria();
         criteria.andEqualTo("itemId", productId);
         return productParamMapper.selectOneByExample(itemsParamExp);
+    }
+
+    @Override
+    public int queryCommentLevel(String productId, Integer levelType) {
+        Example itemsCommentExp = new Example(ItemsComments.class);
+        Example.Criteria criteria = itemsCommentExp.createCriteria();
+        criteria.andEqualTo("itemId", productId);
+        if(StringUtils.isNotBlank(productId)){
+            criteria.andEqualTo("commentLevel",levelType);
+        }
+        return productCommentMapper.selectCountByExample(itemsCommentExp);
+    }
+
+    @Override
+    public PageInfo<CommentContentODto> queryCommentContent(CommentContentIDto contentIDto) {
+        PageHelper.startPage(contentIDto.getPage(),contentIDto.getPageSize());
+        List<CommentContentODto> grid =productCommentMapper.queryCommentContent(contentIDto);
+        return new PageInfo<>(grid);
     }
 }
