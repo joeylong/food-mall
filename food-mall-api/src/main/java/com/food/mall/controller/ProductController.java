@@ -6,6 +6,7 @@ import com.food.mall.common.utils.vo.ResponseVo;
 import com.food.mall.dto.CommentContentIDto;
 import com.food.mall.dto.CommentLevelCountsODto;
 import com.food.mall.dto.ProductInfoODto;
+import com.food.mall.dto.ProductSearchIDto;
 import com.food.mall.service.ProductService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,12 @@ public class ProductController {
     @GetMapping("/comments")
     public ResponseVo comments(CommentContentIDto contentIDto) {
         PageInfo pageInfo = productService.queryCommentContent(contentIDto);
+        return ResponseUtil.success(pageInfo);
+    }
+
+    @GetMapping("/search")
+    public ResponseVo searchProductList(ProductSearchIDto searchIDto) {
+        PageInfo pageInfo = productService.searchProductList(searchIDto);
         return ResponseUtil.success(pageInfo);
     }
 
