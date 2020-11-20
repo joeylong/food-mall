@@ -1,9 +1,6 @@
 package com.food.mall.service;
 
-import com.food.mall.dto.CommentContentIDto;
-import com.food.mall.dto.CommentContentODto;
-import com.food.mall.dto.ProductListODto;
-import com.food.mall.dto.ProductSearchIDto;
+import com.food.mall.dto.*;
 import com.food.mall.pojo.Items;
 import com.food.mall.pojo.ItemsImg;
 import com.food.mall.pojo.ItemsParam;
@@ -62,4 +59,11 @@ public interface ProductService {
      * 商品检索
      */
     PageInfo<ProductListODto> searchProductList(ProductSearchIDto searchIDto);
+
+    /**
+     * 商根据类别id品检索
+     */
+    PageInfo<ProductListODto> searchCatProductList(CatProductSearchIDto searchIDto);
+
+
 }

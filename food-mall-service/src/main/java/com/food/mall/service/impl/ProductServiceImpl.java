@@ -1,10 +1,7 @@
 package com.food.mall.service.impl;
 
 import com.food.mall.common.utils.DesensitizationUtil;
-import com.food.mall.dto.CommentContentIDto;
-import com.food.mall.dto.CommentContentODto;
-import com.food.mall.dto.ProductListODto;
-import com.food.mall.dto.ProductSearchIDto;
+import com.food.mall.dto.*;
 import com.food.mall.mapper.*;
 import com.food.mall.pojo.*;
 import com.food.mall.service.ProductService;
@@ -89,6 +86,13 @@ public class ProductServiceImpl implements ProductService {
     public PageInfo<ProductListODto> searchProductList(ProductSearchIDto searchIDto) {
         PageHelper.startPage(searchIDto.getPage(),searchIDto.getPageSize());
         List<ProductListODto> list =productMapper.searchProductList(searchIDto);
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public PageInfo<ProductListODto> searchCatProductList(CatProductSearchIDto searchIDto) {
+        PageHelper.startPage(searchIDto.getPage(),searchIDto.getPageSize());
+        List<ProductListODto> list =productMapper.searchCatProductList(searchIDto);
         return new PageInfo<>(list);
     }
 }

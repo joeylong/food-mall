@@ -18,37 +18,71 @@
     </resultMap>
     <select id="searchProductList" resultType="com.food.mall.dto.ProductListODto">
         SELECT
-        i.id as productId,
-        i.item_name as productName,
-        i.sell_counts as sellCounts,
-        ii.url as imgUrl,
-        tempSpec.price_discount as price
+          i.id as productId,
+          i.item_name as productName,
+          i.sell_counts as sellCounts,
+          ii.url as imgUrl,
+          tempSpec.price_discount as price
         FROM
-        items i
+          items i
         LEFT JOIN
-        items_img ii
+          items_img ii
         on
-        i.id = ii.item_id
+          i.id = ii.item_id
         LEFT JOIN
-        (SELECT item_id,MIN(price_discount) as price_discount from items_spec GROUP BY item_id) tempSpec
+          (SELECT item_id,MIN(price_discount) as price_discount from items_spec GROUP BY item_id) tempSpec
         on
-        i.id = tempSpec.item_id
+          i.id = tempSpec.item_id
         WHERE
-        ii.is_main = 1
-        <if test=" keywords != null and keywords != '' ">
-            AND i.item_name like '%${keywords}%'
-        </if>
+          ii.is_main = 1
+          <if test=" keywords != null and keywords != '' ">
+              AND i.item_name like '%${keywords}%'
+          </if>
         order by
-        <choose>
-            <when test=" sort == &quot;c&quot; ">
-                i.sell_counts desc
-            </when>
-            <when test=" sort == &quot;p&quot; ">
-                tempSpec.price_discount asc
-            </when>
-            <otherwise>
-                i.item_name asc
-            </otherwise>
-        </choose>
+          <choose>
+              <when test=" sort == &quot;c&quot; ">
+                  i.sell_counts desc
+              </when>
+              <when test=" sort == &quot;p&quot; ">
+                  tempSpec.price_discount asc
+              </when>
+              <otherwise>
+                  i.item_name asc
+              </otherwise>
+          </choose>
+    </select>
+    <select id="searchCatProductList" resultType="com.food.mall.dto.ProductListODto">
+        SELECT
+          i.id as productId,
+          i.item_name as productName,
+          i.sell_counts as sellCounts,
+          ii.url as imgUrl,
+          tempSpec.price_discount as price
+        FROM
+          items i
+        LEFT JOIN
+          items_img ii
+        on
+          i.id = ii.item_id
+        LEFT JOIN
+          (SELECT item_id,MIN(price_discount) as price_discount from items_spec GROUP BY item_id) tempSpec
+        on
+          i.id = tempSpec.item_id
+        WHERE
+          ii.is_main = 1
+        and
+          i.cat_id = #{catId}
+        order by
+          <choose>
+              <when test=" sort == &quot;c&quot; ">
+                  i.sell_counts desc
+              </when>
+              <when test=" sort == &quot;p&quot; ">
+                  tempSpec.price_discount asc
+              </when>
+              <otherwise>
+                  i.item_name asc
+              </otherwise>
+          </choose>
     </select>
 </mapper>

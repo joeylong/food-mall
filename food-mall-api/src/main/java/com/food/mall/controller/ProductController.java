@@ -3,10 +3,7 @@ package com.food.mall.controller;
 import com.food.mall.common.enums.CommentLevelTypeEnum;
 import com.food.mall.common.utils.ResponseUtil;
 import com.food.mall.common.utils.vo.ResponseVo;
-import com.food.mall.dto.CommentContentIDto;
-import com.food.mall.dto.CommentLevelCountsODto;
-import com.food.mall.dto.ProductInfoODto;
-import com.food.mall.dto.ProductSearchIDto;
+import com.food.mall.dto.*;
 import com.food.mall.service.ProductService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +44,12 @@ public class ProductController {
     @GetMapping("/search")
     public ResponseVo searchProductList(ProductSearchIDto searchIDto) {
         PageInfo pageInfo = productService.searchProductList(searchIDto);
+        return ResponseUtil.success(pageInfo);
+    }
+
+    @GetMapping("/catProduct")
+    public ResponseVo catProduct(CatProductSearchIDto searchIDto) {
+        PageInfo pageInfo = productService.searchCatProductList(searchIDto);
         return ResponseUtil.success(pageInfo);
     }
 
