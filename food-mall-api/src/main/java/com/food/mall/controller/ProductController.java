@@ -9,6 +9,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -53,5 +55,11 @@ public class ProductController {
         return ResponseUtil.success(pageInfo);
     }
 
+    @GetMapping("/refresh")
+    public ResponseVo refresh(@RequestParam("productSpecIds") String productSpecIds) {
+        List<ShopCartODto> list = productService.queryItemsBySpecIds(productSpecIds);
+        //TODO同步到redis
+        return ResponseUtil.success(list);
+    }
 
 }

@@ -65,5 +65,10 @@ public interface ProductService {
      */
     PageInfo<ProductListODto> searchCatProductList(CatProductSearchIDto searchIDto);
 
+    /**
+     * 刷新购物车中的数据
+     */
+    List<ShopCartODto> queryItemsBySpecIds(String specIds);
+
 
 }

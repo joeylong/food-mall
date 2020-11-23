@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -94,5 +96,15 @@ public class ProductServiceImpl implements ProductService {
         PageHelper.startPage(searchIDto.getPage(),searchIDto.getPageSize());
         List<ProductListODto> list =productMapper.searchCatProductList(searchIDto);
         return new PageInfo<>(list);
+    }
+
+    @Override
+    public List<ShopCartODto> queryItemsBySpecIds(String specIds) {
+        if(StringUtils.isBlank(specIds)){
+            return new ArrayList<>();
+        }
+        String[] ids = specIds.split(",");
+        List<String> specIdList = Arrays.asList(ids);
+        return productMapper.queryItemsBySpecIds(specIdList);
     }
 }
